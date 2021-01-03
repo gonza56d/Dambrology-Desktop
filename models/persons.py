@@ -8,7 +8,10 @@ class Person:
     image = 0
     destiny = 0
     path = 0
-    karmas = {}
+    karmas = []
+
+    def __init__(self):
+        self.karmas = []
 
     @property
     def full_name(self):

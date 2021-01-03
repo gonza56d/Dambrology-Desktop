@@ -24,12 +24,14 @@ class NewStudyWindow(QWidget):
     lbl_birthday = None  # Label to indicate birthday date selector
     input_birthday = None  # datetime.date to indicate person.birthday
     btn_calculate = None  # Button to generate the Person instance and send it to the business layer
-    # labels to indicate person numerology results after btn_calculate.click()
-    lbl_person = None  # person full name
-    lbl_person_birthday = None  # person birthday
-    lbl_essence = None  # person essence
-    lbl_image = None  # person image
-    lbl_destiny = None  # person destiny
+    # labels to indicate person numerology attributes result after btn_calculate.click()
+    lbl_person = None
+    lbl_person_birthday = None
+    lbl_essence = None
+    lbl_image = None
+    lbl_destiny = None
+    lbl_path = None
+    lbl_karmas = None
 
     def __init__(self, app):
         super().__init__()
@@ -88,10 +90,12 @@ class NewStudyWindow(QWidget):
         self.lbl_essence.setText(f'<h3>Esencia: {self.person.essence}</h3>')
         self.lbl_image.setText(f'<h3>Imagen: {self.person.image}</h3>')
         self.lbl_destiny.setText(f'<h3>Destino: {self.person.destiny}</h3>')
+        self.lbl_path.setText(f'<h3>Sendero: {self.person.path}</h3>')
+        self.lbl_karmas.setText(f'<h3>Karmas: {self.person.karmas}</h3>')
 
     def init_person_labels(self):
         self.lbl_person = DPersonLabel(value='', parent=self, x_pos=app_constants.LEFT_MARGIN + 300,
-                                       y_pos=app_constants.TOP_MARGIN)
+                                       y_pos=app_constants.TOP_MARGIN, big=True)
         self.lbl_person_birthday = DPersonLabel(value='', parent=self, x_pos=app_constants.LEFT_MARGIN + 300,
                                                 y_pos=app_constants.TOP_MARGIN + 40)
         self.lbl_essence = DPersonLabel(value='', parent=self, x_pos=app_constants.LEFT_MARGIN + 300,
@@ -100,3 +104,7 @@ class NewStudyWindow(QWidget):
                                       y_pos=app_constants.TOP_MARGIN + 120)
         self.lbl_destiny = DPersonLabel(value='', parent=self, x_pos=app_constants.LEFT_MARGIN + 300,
                                         y_pos=app_constants.TOP_MARGIN + 160)
+        self.lbl_path = DPersonLabel(value='', parent=self, x_pos=app_constants.LEFT_MARGIN + 450,
+                                     y_pos=app_constants.TOP_MARGIN + 80)
+        self.lbl_karmas = DPersonLabel(value='', parent=self, x_pos=app_constants.LEFT_MARGIN + 450,
+                                       y_pos=app_constants.TOP_MARGIN + 120, big=True)

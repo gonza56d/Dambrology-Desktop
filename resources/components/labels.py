@@ -20,8 +20,10 @@ class DLabel(QLabel):
 
 class DPersonLabel(QLabel):
 
-    def __init__(self, value: str, parent: QWidget, x_pos: int, y_pos: int):
+    def __init__(self, value: str, parent: QWidget, x_pos: int, y_pos: int, big: bool = False):
         super().__init__(value, parent=parent)
         self.move(x_pos, y_pos)
+        self.setFixedWidth(200)
+        if big:
+            self.setFixedWidth(400)
         self.setFixedHeight(80)
-        self.setFixedWidth(400)
