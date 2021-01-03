@@ -6,7 +6,6 @@ from resources.constants.labels import FormattedLabels, Labels
 
 
 class DButton(QPushButton):
-
     text = ''
 
     def __init__(self, parent, text, x_pos, y_pos):
@@ -18,3 +17,7 @@ class DButton(QPushButton):
         self.text = text.value
         self.setText(self.text)
         self.setFont(QFont('Ubuntu', 22))
+        self.clicked.connect(lambda: self.on_click())
+
+    def on_click(self):
+        self.parent().calculate()
