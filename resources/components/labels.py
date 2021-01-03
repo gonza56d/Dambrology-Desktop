@@ -16,3 +16,12 @@ class DLabel(QLabel):
         self.text = value.value
         super().__init__(self.text, parent=parent)
         self.move(x_pos, y_pos)
+
+
+class DPersonLabel(QLabel):
+
+    def __init__(self, value: str, parent: QWidget, x_pos: int, y_pos: int):
+        super().__init__(value, parent=parent)
+        self.move(x_pos, y_pos)
+        self.setFixedHeight(80)
+        self.setFixedWidth(400)

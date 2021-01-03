@@ -1,13 +1,13 @@
 import sys
 from datetime import date
 
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget, QLabel
 
 from business.numerology import Numerology
 from models.persons import Person
 from resources.components.buttons import DButton
 from resources.components.inputs import DLineEdit, Validators, DCalendar
-from resources.components.labels import DLabel
+from resources.components.labels import DLabel, DPersonLabel
 from resources.constants import app_constants
 from resources.constants.labels import FormattedLabels, Labels
 
@@ -24,16 +24,23 @@ class NewStudyWindow(QWidget):
     lbl_birthday = None  # Label to indicate birthday date selector
     input_birthday = None  # datetime.date to indicate person.birthday
     btn_calculate = None  # Button to generate the Person instance and send it to the business layer
+    # labels to indicate person numerology results after btn_calculate.click()
+    lbl_person = None  # person full name
+    lbl_person_birthday = None  # person birthday
+    lbl_essence = None  # person essence
+    lbl_image = None  # person image
+    lbl_destiny = None  # person destiny
 
     def __init__(self, app):
         super().__init__()
-        self.setWindowTitle(str(Labels.DAMBROLOGY) + ' | ' + str(Labels.NEW_STUDY))
+        self.setWindowTitle(Labels.DAMBROLOGY.value + ' | ' + Labels.NEW_STUDY.value)
         screen = app.primaryScreen()
         size = screen.size()
         self.setGeometry(size.width() / 2 - app_constants.APP_WIDTH / 2, size.height() / 2 - app_constants.APP_HEIGHT / 2,
                          app_constants.APP_WIDTH, app_constants.APP_HEIGHT)
         self.setFixedSize(app_constants.APP_WIDTH, app_constants.APP_HEIGHT)
         self.set_labels()
+        self.init_person_labels()
         self.set_inputs()
         self.set_buttons()
         self.show()
@@ -71,4 +78,25 @@ class NewStudyWindow(QWidget):
         self.person.names = self.input_names.text()
         self.person.last_names = self.input_last_names.text()
         self.person.birthday = d
-        person = Numerology.perform_numerology(person=self.person)
+        self.person = Numerology.perform_numerology(person=self.person)
+        self.set_person_labels()
+        self.update()
+
+    def set_person_labels(self):
+        self.lbl_person.setText(f'<h1>{self.person.full_name}</h1>')
+        self.lbl_person_birthday.setText(f'<h3>Nacimiento: {self.person.formatted_birthday}</h3>')
+        self.lbl_essence.setText(f'<h3>Esencia: {self.person.essence}</h3>')
+        self.lbl_image.setText(f'<h3>Imagen: {self.person.image}</h3>')
+        self.lbl_destiny.setText(f'<h3>Destino: {self.person.destiny}</h3>')
+
+    def init_person_labels(self):
+        self.lbl_person = DPersonLabel(value='', parent=self, x_pos=app_constants.LEFT_MARGIN + 300,
+                                       y_pos=app_constants.TOP_MARGIN)
+        self.lbl_person_birthday = DPersonLabel(value='', parent=self, x_pos=app_constants.LEFT_MARGIN + 300,
+                                                y_pos=app_constants.TOP_MARGIN + 40)
+        self.lbl_essence = DPersonLabel(value='', parent=self, x_pos=app_constants.LEFT_MARGIN + 300,
+                                        y_pos=app_constants.TOP_MARGIN + 80)
+        self.lbl_image = DPersonLabel(value='', parent=self, x_pos=app_constants.LEFT_MARGIN + 300,
+                                      y_pos=app_constants.TOP_MARGIN + 120)
+        self.lbl_destiny = DPersonLabel(value='', parent=self, x_pos=app_constants.LEFT_MARGIN + 300,
+                                        y_pos=app_constants.TOP_MARGIN + 160)

@@ -5,7 +5,7 @@ from models.persons import Person
 class Numerology:
     """Controller class that holds all the logic to perform Numerology to a person."""
 
-    VOWELS = 'aeiou'
+    VOWELS = 'aeiouAEIOU'
     MASTER_NUMBERS = (11, 22, 33)
 
     @staticmethod
@@ -27,7 +27,6 @@ class Numerology:
 
     @staticmethod
     def vowel(letter: str):
-        letter = letter.lower()
         return letter in Numerology.VOWELS
 
     @staticmethod
