@@ -13,15 +13,17 @@ from resources.constants.labels import FormattedLabels, Labels
 
 
 class NewStudyWindow(QWidget):
+    """Window to perform a new numerologic study.
+    Get all the required data from its inputs and send a Person instance to the business layer to get results."""
 
-    person = None
-    lbl_names = None
-    input_names = None
-    lbl_last_names = None
-    input_last_names = None
-    lbl_birthday = None
-    input_birthday = None
-    btn_calculate = None
+    person = None  # Person class instance generated on btn_calculate.click()
+    lbl_names = None  # Label to indicate names input field
+    input_names = None   # str to populate person.names
+    lbl_last_names = None  # Label to indicate last_names input field
+    input_last_names = None  # str to populate person.last_names
+    lbl_birthday = None  # Label to indicate birthday date selector
+    input_birthday = None  # datetime.date to indicate person.birthday
+    btn_calculate = None  # Button to generate the Person instance and send it to the business layer
 
     def __init__(self, app):
         super().__init__()
@@ -38,6 +40,7 @@ class NewStudyWindow(QWidget):
         sys.exit(app.exec_())
 
     def set_labels(self):
+        """Initialize window (self) labels."""
         init_height = app_constants.TOP_MARGIN
         self.lbl_names = DLabel(value=FormattedLabels.NAMES, parent=self, x_pos=app_constants.LEFT_MARGIN,
                                 y_pos=init_height)
@@ -47,6 +50,7 @@ class NewStudyWindow(QWidget):
                                    y_pos=init_height+200)
 
     def set_inputs(self):
+        """Initialize window (self) input fields."""
         init_height = app_constants.TOP_MARGIN + 40
         self.input_names = DLineEdit(parent=self, x_pos=app_constants.LEFT_MARGIN, y_pos=init_height,
                                      validator=Validators.TEXT)
@@ -55,11 +59,13 @@ class NewStudyWindow(QWidget):
         self.input_birthday = DCalendar(parent=self, x_pos=app_constants.LEFT_MARGIN, y_pos=init_height + 200)
 
     def set_buttons(self):
+        """Initialize window (self) buttons."""
         self.btn_calculate = DButton(parent=self, text=Labels.CALCULATE, x_pos=app_constants.APP_WIDTH / 2 - 35,
                                      y_pos=app_constants.APP_HEIGHT - 70)
 
     def calculate(self):
-        d = self.input_birthday.selectedDate().getDate()
+        """Generate new Person instance and populate attributes with corresponding input field values."""
+        d = self.input_birthday.selectedDate().getDate()  # date selector value as tuple(year: int, mont: int, day: int)
         d = date(d[0], d[1], d[2])
         self.person = Person()
         self.person.names = self.input_names.text()

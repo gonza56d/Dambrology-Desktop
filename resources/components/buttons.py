@@ -1,15 +1,17 @@
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QPushButton
+from PyQt5.QtWidgets import QPushButton, QWidget
 
 from business.exceptions import DambrologyGuiException
-from resources.constants.labels import FormattedLabels, Labels
+from resources.constants.labels import Labels
 
 
 class DButton(QPushButton):
+    """Custom button with application's standards."""
+
     text = ''
 
-    def __init__(self, parent, text, x_pos, y_pos):
-        if not isinstance(text, FormattedLabels) and not isinstance(text, Labels):
+    def __init__(self, parent: QWidget, text: Labels, x_pos: int, y_pos: int):
+        if not isinstance(text, Labels):
             raise DambrologyGuiException(
                 "Expected parameter 'text' as <enum 'resources.constants.labels.Labels'>")
         super().__init__(parent=parent)

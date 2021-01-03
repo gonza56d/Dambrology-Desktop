@@ -2,17 +2,20 @@ from enum import Enum
 
 from PyQt5.QtCore import QRegExp
 from PyQt5.QtGui import QRegExpValidator, QFont
-from PyQt5.QtWidgets import QLineEdit, QCalendarWidget
+from PyQt5.QtWidgets import QLineEdit, QCalendarWidget, QWidget
 
 from business.exceptions import DambrologyGuiException
 
 
 class Validators(Enum):
+    """Input regex validators."""
+
     TEXT = 'TEXT'
     NUMBER = 'NUMBER'
 
     @classmethod
     def regex_type(cls, validator):
+        """Return regex according to validator."""
         if validator is cls.TEXT:
             return '[a-z-A-Z\\s]+'
         elif validator is cls.NUMBER:
@@ -20,8 +23,9 @@ class Validators(Enum):
 
 
 class DLineEdit(QLineEdit):
+    """Custom input field with application's standards."""
 
-    def __init__(self, parent, x_pos, y_pos, validator=None):
+    def __init__(self, parent: QWidget, x_pos: int, y_pos: int, validator: Validators = None):
         super().__init__(parent=parent)
         self.move(x_pos, y_pos)
         self.setFont(QFont('Ubuntu', 16))
@@ -35,8 +39,9 @@ class DLineEdit(QLineEdit):
 
 
 class DCalendar(QCalendarWidget):
+    """Custom date selector with application's standards."""
 
-    def __init__(self, parent, x_pos, y_pos):
+    def __init__(self, parent: QWidget, x_pos: int, y_pos: int):
         super().__init__(parent=parent)
         self.move(x_pos, y_pos)
         self.setFont(QFont('Ubuntu', 16))
