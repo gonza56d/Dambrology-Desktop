@@ -71,4 +71,4 @@ class NewStudyWindow(QWidget):
         self.person.names = self.input_names.text()
         self.person.last_names = self.input_last_names.text()
         self.person.birthday = d
-        Numerology.perform_numerology(person=self.person)
+        person = Numerology.perform_numerology(person=self.person)
